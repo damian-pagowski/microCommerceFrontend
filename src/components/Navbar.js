@@ -1,4 +1,11 @@
+'use client';
+
+import React, { useContext } from 'react';
+import { UserContext } from '../context/UserContext';
+
 const Navbar = () => {
+  const { user, logout } = useContext(UserContext);
+
   return (
     <nav className="navbar navbar-expand-lg bg-body-tertiary">
       <div className="container-fluid">
@@ -9,8 +16,15 @@ const Navbar = () => {
         <div className="collapse navbar-collapse" id="navbarNavAltMarkup">
           <div className="navbar-nav">
             <a className="nav-link" href="/products">Products</a>
-            <a className="nav-link" href="/cart">Cart</a>
-            <a className="nav-link " href="/login">Login</a>
+            <a className="nav-link" href="/cart"><i className="bi bi-cart"></i> Cart</a>            
+            {!user ? (
+              <a className="nav-link" href="/login">Login</a>
+            ) : (
+              <span className='d-flex'>
+              <a className="nav-link disabled"><i className="bi bi-person-circle"></i>{user.username}</a>
+              <a className="nav-link" href="" onClick={logout}>Logout</a>
+              </span>
+            )}
           </div>
         </div>
       </div>

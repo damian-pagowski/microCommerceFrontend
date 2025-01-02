@@ -1,6 +1,6 @@
 'use client';
 
-import ProductCard from '../../components/ui/ProductCard';
+import ProductCard from './ProductCard';
 
 const ProductGrid = ({ products }) => {
   return (

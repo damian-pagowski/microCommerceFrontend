@@ -1,3 +1,5 @@
+'use client';
+
 const Footer = () => {
     return (
       <footer style={{ background: '#f1f1f1', padding: '1rem', textAlign: 'center' }}>

@@ -7,6 +7,7 @@ import ProductDetails from './components/ProductDetails';
 import ProductReviewsSummary from './components/ProductReviewsSummary';
 import ProductReviews from './components/ProductReviews';
 import { fetchProduct, fetchReviews, fetchReviewStats } from '../../../services/api';
+import { addToCart } from '../../../utils/cart';
 
 const ProductDetailsPage = ({ params: paramsPromise }) => {
   const [params, setParams] = useState(null);
@@ -59,6 +60,10 @@ const ProductDetailsPage = ({ params: paramsPromise }) => {
   if (!product) {
     return <div>Product not found</div>;
   }
+  const handleAddToCart = () => {
+    addToCart(product);
+    console.log(`${product.name} added to cart`);
+  };
 
   return (
     <div className="container mt-4">
@@ -68,7 +73,7 @@ const ProductDetailsPage = ({ params: paramsPromise }) => {
           <ProductCarousel product={product} />
         </div>
         <div className="col-md-8">
-          <ProductDetails product={product} />
+        <ProductDetails product={product} onAddToCart={handleAddToCart} />
         </div>
       </div>
       <div className="row mt-5">
