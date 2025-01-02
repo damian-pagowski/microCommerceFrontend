@@ -1,5 +1,18 @@
 const BASE_URL_PRODUCT = 'http://127.0.0.1:3034/products';
 const BASE_URL_REVIEWS = 'http://127.0.0.1:3037/reviews';
+const BASE_URL_ORDER = 'http://127.0.0.1:3032/orders';
+const BASE_URL_PAYMENT = 'http://127.0.0.1:3033/payments';
+
+const getAuthHeaders = () => {
+  const token = localStorage.getItem('authToken');
+  if (!token) {
+    throw new Error('Authentication token is missing. Please log in.');
+  }
+  return {
+    Authorization: `Bearer ${token}`,
+    'Content-Type': 'application/json',
+  };
+};
 
 export const fetchProduct = async (productId) => {
   const response = await fetch(`${BASE_URL_PRODUCT}/${productId}`);
@@ -30,4 +43,44 @@ export const fetchProducts = async () => {
     throw new Error('Failed to fetch products');
   }
   return await res.json();
+};
+
+// Create a new order
+export const createOrder = async (items) => {
+  const request = {
+    method: 'POST',
+    headers: getAuthHeaders(),
+    body: JSON.stringify({ items }),
+  };
+  try {
+    const response = await fetch(`${BASE_URL_ORDER}`, request);
+    return await response.json();
+  } catch (error) {
+    throw new Error('Failed to create order');
+  }
+};
+
+// Make a payment
+export const makePayment = async (paymentData) => {
+  const response = await fetch(`${BASE_URL_PAYMENT}`, {
+    method: 'POST',
+    headers: getAuthHeaders(),
+    body: JSON.stringify(paymentData),
+  });
+  if (!response.ok) {
+    throw new Error('Payment failed');
+  }
+  return await response.json();
+};
+
+// Fetch order by ID
+export const fetchOrder = async (orderId) => {
+  const response = await fetch(`${BASE_URL_ORDER}/${orderId}`, {
+    method: 'GET',
+    headers: getAuthHeaders(),
+  });
+  if (!response.ok) {
+    throw new Error('Failed to fetch order');
+  }
+  return await response.json();
 };

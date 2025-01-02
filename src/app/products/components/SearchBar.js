@@ -5,7 +5,7 @@ const SearchBar = () => {
     e.preventDefault();
     const searchQuery = e.target.search.value;
     console.log('Search Query:', searchQuery);
-    // Add search logic here
+    // TODO Add search logic
   };
 
   return (

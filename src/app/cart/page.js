@@ -1,53 +1,97 @@
 'use client';
 
-import { useEffect, useState } from 'react';
-import CartItem from './components/CartItem';
-import CartSummary from './components/CartSummary';
+import { useState, useEffect } from 'react';
+import PaymentForm from './components/PaymentForm';
+import { createOrder, makePayment, fetchOrder } from '../../services/api';
 
 const CartPage = () => {
   const [cart, setCart] = useState([]);
+  const [orderId, setOrderId] = useState(null);
+  const [status, setStatus] = useState(null);
+  const [error, setError] = useState(null);
+  const [isPaying, setIsPaying] = useState(false);
 
   useEffect(() => {
     const storedCart = JSON.parse(localStorage.getItem('cart')) || [];
     setCart(storedCart);
   }, []);
 
-  const removeFromCart = (productId) => {
-    const updatedCart = cart.filter((item) => item.productId !== productId);
-    setCart(updatedCart);
-    localStorage.setItem('cart', JSON.stringify(updatedCart));
+  const handleCheckout = async () => {
+    console.log('handleCheckout');
+    try {
+      setError(null);
+      setIsPaying(false);
+      const payload = cart.map((item) => ({ productId: item.productId, quantity: item.quantity }));
+      const orderResponse = await createOrder(payload);
+
+      setOrderId(orderResponse.order._id);
+      setIsPaying(true);
+    } catch (err) {
+      setError('Failed to create order. Please try again.');
+    }
   };
 
-  const updateQuantity = (productId, quantity) => {
-    const updatedCart = cart.map((item) =>
-      item.productId === productId ? { ...item, quantity } : item
-    );
-    setCart(updatedCart);
-    localStorage.setItem('cart', JSON.stringify(updatedCart));
-  };
+  const handlePayment = async (cardDetails) => {
+    try {
+      setError(null);
+      const paymentResponse = await makePayment({
+        orderId,
+        amount: cart.reduce((total, item) => total + item.price * item.quantity, 0),
+        currency: 'EUR',
+        cardDetails,
+      });
 
-  const total = cart.reduce((sum, item) => sum + item.price * item.quantity, 0);
+      if (!paymentResponse) {
+        setError('Payment failed. Please check your card details.');
+        return;
+      }
+      const orderStatusResponse = await fetchOrder(orderId);
+
+      if (orderStatusResponse.order.status === 'paid' || orderStatusResponse.order.status === 'pending') {
+        setStatus('Payment successful! Your order has been placed.');
+        localStorage.removeItem('cart');
+        setCart([]);
+        setIsPaying(false);
+      } else {
+        setError('Payment processed, but the order status is not paid. Please contact support.');
+      }
+    } catch (err) {
+      setError('An error occurred during payment.');
+    }
+  };
 
   return (
     <div className="container mt-5">
+      <h1>Your Cart</h1>
       <div className="row">
         <div className="col-md-8">
-          <h2>Your Cart</h2>
-          {cart.length > 0 ? (
-            cart.map((item) => (
-              <CartItem
-                key={item.productId}
-                item={item}
-                onRemove={removeFromCart}
-                onUpdateQuantity={updateQuantity}
-              />
-            ))
-          ) : (
+          {cart.length === 0 ? (
             <p>Your cart is empty.</p>
+          ) : (
+            <ul className="list-group">
+              {cart.map((item) => (
+                <li key={item.productId} className="list-group-item d-flex justify-content-between align-items-center">
+                  {item.name}
+                  <span className="badge bg-primary rounded-pill">x{item.quantity}</span>
+                </li>
+              ))}
+            </ul>
           )}
         </div>
         <div className="col-md-4">
-          <CartSummary total={total} />
+          <h3>Summary</h3>
+          <p>
+            Total: <strong>${cart.reduce((total, item) => total + item.price * item.quantity, 0).toFixed(2)}</strong>
+          </p>
+          {error && <p className="text-danger" testID="checkout-error">{error}</p>}
+          {status && <p className="text-success" testID="checkout-success">{status}</p>}
+          {!isPaying ? (
+            <button className="btn btn-primary w-100" onClick={handleCheckout} disabled={cart.length === 0} testID="checkout-button">
+              Checkout
+            </button>
+          ) : (
+            <PaymentForm onSubmit={handlePayment} />
+          )}
         </div>
       </div>
     </div>
