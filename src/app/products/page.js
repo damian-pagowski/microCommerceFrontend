@@ -30,7 +30,6 @@ const ProductList = () => {
 
   return (
     <div className="container mx-auto">
-      <SearchBar />
       <ProductGrid products={products} />
     </div>
   );
