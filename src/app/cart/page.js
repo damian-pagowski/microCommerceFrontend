@@ -3,6 +3,7 @@
 import { useState, useEffect } from 'react';
 import PaymentForm from './components/PaymentForm';
 import { createOrder, makePayment, fetchOrder } from '../../services/api';
+import CartItem from './components/CartItem' ;
 
 const CartPage = () => {
   const [cart, setCart] = useState([]);
@@ -60,6 +61,21 @@ const CartPage = () => {
     }
   };
 
+
+  const removeFromCart = (productId) => {
+    const updatedCart = cart.filter((item) => item.productId !== productId);
+    setCart(updatedCart);
+    localStorage.setItem('cart', JSON.stringify(updatedCart));
+  };
+
+  const updateQuantity = (productId, quantity) => {
+    const updatedCart = cart.map((item) =>
+      item.productId === productId ? { ...item, quantity } : item
+    );
+    setCart(updatedCart);
+    localStorage.setItem('cart', JSON.stringify(updatedCart));
+  };
+
   return (
     <div className="container mt-5">
       <h1>Your Cart</h1>
@@ -70,23 +86,21 @@ const CartPage = () => {
           ) : (
             <ul className="list-group">
               {cart.map((item) => (
-                <li key={item.productId} className="list-group-item d-flex justify-content-between align-items-center">
-                  {item.name}
-                  <span className="badge bg-primary rounded-pill">x{item.quantity}</span>
-                </li>
+                <CartItem key={item.productId} item={item} onRemove={removeFromCart} onUpdateQuantity={updateQuantity} />
               ))}
             </ul>
           )}
         </div>
         <div className="col-md-4">
+
           <h3>Summary</h3>
           <p>
             Total: <strong>${cart.reduce((total, item) => total + item.price * item.quantity, 0).toFixed(2)}</strong>
           </p>
-          {error && <p className="text-danger" testID="checkout-error">{error}</p>}
-          {status && <p className="text-success" testID="checkout-success">{status}</p>}
+          {error && <p className="text-danger" id="checkout-error">{error}</p>}
+          {status && <p className="text-success" id="checkout-success">{status}</p>}
           {!isPaying ? (
-            <button className="btn btn-primary w-100" onClick={handleCheckout} disabled={cart.length === 0} testID="checkout-button">
+            <button className="btn btn-primary w-100" onClick={handleCheckout} disabled={cart.length === 0} id="checkout-button">
               Checkout
             </button>
           ) : (

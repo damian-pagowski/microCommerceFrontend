@@ -20,10 +20,11 @@ const Navbar = () => {
             {!user ? (
               <a className="nav-link" href="/login">Login</a>
             ) : (
-              <span className='d-flex'>
-              <a className="nav-link disabled"><i className="bi bi-person-circle"></i>{user.username}</a>
+              <div className='d-flex'>
+              <a className="nav-link" href="/orders">Orders</a>
               <a className="nav-link" href="" onClick={logout}>Logout</a>
-              </span>
+              <a className="nav-link disabled"><i className="bi bi-person-circle"></i>{user.username}</a>
+              </div>
             )}
           </div>
         </div>

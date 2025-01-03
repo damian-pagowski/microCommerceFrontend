@@ -2,7 +2,6 @@
 
 import React, { useState, useEffect } from 'react';
 import ProductHeader from './components/ProductHeader';
-import ProductCarousel from './components/ProductCarousel';
 import ProductDetails from './components/ProductDetails';
 import ProductReviewsSummary from './components/ProductReviewsSummary';
 import ProductReviews from './components/ProductReviews';
@@ -70,17 +69,23 @@ const ProductDetailsPage = ({ params: paramsPromise }) => {
       <ProductHeader name={product.name} badges={product.badges} />
       <div className="row g-5">
         <div className="col-md-4">
-          <ProductCarousel product={product} />
+          <img
+            src={`https://placehold.co/600x400?text=${product.name}`}
+            alt={product.name}
+            className="img-fluid rounded shadow"
+          />
         </div>
         <div className="col-md-8">
-        <ProductDetails product={product} onAddToCart={handleAddToCart} />
+          <ProductDetails product={product} onAddToCart={handleAddToCart} />
         </div>
       </div>
       <div className="row mt-5">
         <div className="col-md-4">
+          <h4>Reviews Summary</h4>
           <ProductReviewsSummary stats={reviewsStats} />
         </div>
         <div className="col-md-8">
+          <h4>Top Reviews</h4>
           <ProductReviews reviews={reviews} />
         </div>
       </div>

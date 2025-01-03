@@ -3,6 +3,8 @@ const BASE_URL_REVIEWS = 'http://127.0.0.1:3037/reviews';
 const BASE_URL_ORDER = 'http://127.0.0.1:3032/orders';
 const BASE_URL_PAYMENT = 'http://127.0.0.1:3033/payments';
 
+// Get authentication headers for API requests
+//  - This function retrieves the authentication token from local storage
 const getAuthHeaders = () => {
   const token = localStorage.getItem('authToken');
   if (!token) {
@@ -14,6 +16,7 @@ const getAuthHeaders = () => {
   };
 };
 
+// Fetch a product by ID
 export const fetchProduct = async (productId) => {
   const response = await fetch(`${BASE_URL_PRODUCT}/${productId}`);
   if (!response.ok) {
@@ -22,6 +25,7 @@ export const fetchProduct = async (productId) => {
   return response.json();
 };
 
+// Fetch reviews for a product
 export const fetchReviews = async (productId) => {
   const response = await fetch(`${BASE_URL_REVIEWS}/${productId}`);
   if (!response.ok) {
@@ -30,6 +34,7 @@ export const fetchReviews = async (productId) => {
   return response.json();
 };
 
+// Fetch review stats
 export const fetchReviewStats = async (productId) => {
   const response = await fetch(`${BASE_URL_REVIEWS}/stats/${productId}`);
   if (!response.ok) {
@@ -37,6 +42,8 @@ export const fetchReviewStats = async (productId) => {
   }
   return response.json();
 };
+
+// Fetch all products
 export const fetchProducts = async () => {
   const res = await fetch(`${BASE_URL_PRODUCT}`);
   if (!res.ok) {
@@ -81,6 +88,31 @@ export const fetchOrder = async (orderId) => {
   });
   if (!response.ok) {
     throw new Error('Failed to fetch order');
+  }
+  return await response.json();
+};
+
+// Fetch order history
+export const fetchOrderHistory = async () => {
+  const response = await fetch(`${BASE_URL_ORDER}`, {
+    method: 'GET',
+    headers: getAuthHeaders(),
+  });
+  if (!response.ok) {
+    throw new Error('Failed to fetch order');
+  }
+  return await response.json();
+};
+
+// Create a new review
+export const createReview = async (reviewData) => {
+  const response = await fetch(`${BASE_URL_REVIEWS}`, {
+    method: 'POST',
+    headers: getAuthHeaders(),
+    body: JSON.stringify(reviewData),
+  });
+  if (!response.ok) {
+    throw new Error('Payment failed');
   }
   return await response.json();
 };
