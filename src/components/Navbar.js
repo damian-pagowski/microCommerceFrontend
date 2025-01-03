@@ -1,10 +1,18 @@
 'use client';
 
 import React, { useContext } from 'react';
+import { useRouter } from 'next/navigation';
 import { UserContext } from '../context/UserContext';
 
 const Navbar = () => {
   const { user, logout } = useContext(UserContext);
+  const router = useRouter();
+
+  const handleLogout = (e) => {
+    e.preventDefault();
+    logout();
+    router.push('/products'); // Redirect to the products page after logout
+  };
 
   return (
     <nav className="navbar navbar-expand-lg bg-body-tertiary">
@@ -21,9 +29,9 @@ const Navbar = () => {
               <a className="nav-link" href="/login">Login</a>
             ) : (
               <div className='d-flex'>
-              <a className="nav-link" href="/orders">Orders</a>
-              <a className="nav-link" href="" onClick={logout}>Logout</a>
-              <a className="nav-link disabled"><i className="bi bi-person-circle"></i>{user.username}</a>
+                <a className="nav-link" href="/orders">Orders</a>
+                <a className="nav-link" href="" onClick={handleLogout}>Logout</a>
+                <a className="nav-link disabled"><i className="bi bi-person-circle"></i> {user.username}</a>
               </div>
             )}
           </div>

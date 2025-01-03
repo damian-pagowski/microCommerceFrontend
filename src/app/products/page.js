@@ -3,7 +3,6 @@
 import React, { useEffect, useState } from 'react';
 import { fetchProducts } from '../../services/api';
 import ProductGrid from './components/ProductGrid';
-import SearchBar from './components/SearchBar';
 
 const ProductList = () => {
   const [products, setProducts] = useState([]);

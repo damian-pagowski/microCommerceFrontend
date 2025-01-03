@@ -4,12 +4,13 @@ const BASE_URL_ORDER = 'http://127.0.0.1:3032/orders';
 const BASE_URL_PAYMENT = 'http://127.0.0.1:3033/payments';
 
 // Get authentication headers for API requests
-//  - This function retrieves the authentication token from local storage
 const getAuthHeaders = () => {
-  const token = localStorage.getItem('authToken');
-  if (!token) {
-    throw new Error('Authentication token is missing. Please log in.');
+  const storedUser = localStorage.getItem('user');
+  if (!storedUser) {
+    throw new Error('Please log in.');
   }
+  const user = JSON.parse(storedUser);
+  const token = user.token;
   return {
     Authorization: `Bearer ${token}`,
     'Content-Type': 'application/json',
