@@ -1,9 +1,10 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect , useContext} from 'react';
 import PaymentForm from './components/PaymentForm';
 import { createOrder, makePayment, fetchOrder } from '../../services/api';
 import CartItem from './components/CartItem' ;
+import { UserContext } from '../../context/UserContext';
 
 const CartPage = () => {
   const [cart, setCart] = useState([]);
@@ -11,6 +12,8 @@ const CartPage = () => {
   const [status, setStatus] = useState(null);
   const [error, setError] = useState(null);
   const [isPaying, setIsPaying] = useState(false);
+    const { user } = useContext(UserContext);
+  
 
   useEffect(() => {
     const storedCart = JSON.parse(localStorage.getItem('cart')) || [];
@@ -100,7 +103,7 @@ const CartPage = () => {
           {error && <p className="text-danger" id="checkout-error">{error}</p>}
           {status && <p className="text-success" id="checkout-success">{status}</p>}
           {!isPaying ? (
-            <button className="btn btn-primary w-100" onClick={handleCheckout} disabled={cart.length === 0} id="checkout-button">
+            <button className="btn btn-primary w-100" onClick={handleCheckout} disabled={cart.length === 0|| !user} id="checkout-button">
               Checkout
             </button>
           ) : (

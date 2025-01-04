@@ -1,12 +1,15 @@
 'use client';
 
-import React, { useContext } from 'react';
+import React, { useContext, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { UserContext } from '../context/UserContext';
 
 const Navbar = () => {
   const { user, logout } = useContext(UserContext);
   const router = useRouter();
+  useEffect(() => {
+    import("bootstrap/dist/js/bootstrap.bundle.min.js");
+  }, []);
 
   const handleLogout = (e) => {
     e.preventDefault();
@@ -24,16 +27,11 @@ const Navbar = () => {
         <div className="collapse navbar-collapse" id="navbarNavAltMarkup">
           <div className="navbar-nav">
             <a className="nav-link" href="/products">Products</a>
-            <a className="nav-link" href="/cart"><i className="bi bi-cart"></i> Cart</a>            
-            {!user ? (
-              <a className="nav-link" href="/login">Login</a>
-            ) : (
-              <div className='d-flex'>
-                <a className="nav-link" href="/orders">Orders</a>
-                <a className="nav-link" href="" onClick={handleLogout}>Logout</a>
-                <a className="nav-link disabled"><i className="bi bi-person-circle"></i> {user.username}</a>
-              </div>
-            )}
+            <a className="nav-link" href="/cart"><i className="bi bi-cart"></i> Cart</a>
+            {!user && (<a className="nav-link" href="/login">Login</a>)}
+            {user && (<a className="nav-link" href="/orders">Orders</a>)}
+            {user && (<a className="nav-link" href="" onClick={handleLogout}>Logout</a>)}
+            {user && (<a className="nav-link disabled"><i className="bi bi-person-circle"></i> {user.username}</a>)}
           </div>
         </div>
       </div>
