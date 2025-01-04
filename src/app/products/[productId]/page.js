@@ -71,7 +71,7 @@ const ProductDetailsPage = ({ params: paramsPromise }) => {
   return (
     <div className="container mt-4">
       {showNotification && (
-        <div className="alert alert-success" role="alert">
+        <div className="alert alert-success" role="alert" id='added-to-cart-notification'>
           Product added to cart! <a href="/cart" className="alert-link">Go to checkout</a> or <a href="/products" className="alert-link">continue shopping</a>.
         </div>
       )}
@@ -82,6 +82,7 @@ const ProductDetailsPage = ({ params: paramsPromise }) => {
             src={`https://placehold.co/600x400?text=${product.name}`}
             alt={product.name}
             className="img-fluid rounded shadow"
+            id='product-image'
           />
         </div>
         <div className="col-md-8">

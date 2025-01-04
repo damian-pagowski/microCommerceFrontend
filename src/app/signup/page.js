@@ -12,6 +12,7 @@ const SignupPage = () => {
     const [password, setPassword] = useState('');
     const { login } = useContext(UserContext);
     const router = useRouter();
+    const [errorMessage, setErrorMessage] = useState(null); 
 
     const handleSignup = async (e) => {
         e.preventDefault();
@@ -21,7 +22,7 @@ const SignupPage = () => {
             router.push('/');
         } catch (error) {
             console.error('Signup error:', error.message);
-            alert('Signup failed. Please try again.');
+            setErrorMessage('User already exists.');
         }
     };
 
@@ -59,7 +60,12 @@ const SignupPage = () => {
                         onChange={(e) => setPassword(e.target.value)}
                     />
                 </div>
-                <button type="submit" className="btn btn-primary">Signup</button>
+                {errorMessage && ( 
+                    <div id="error" className="alert alert-danger" role="alert">
+                        {errorMessage}
+                    </div>
+                )}
+                <button type="submit" className="btn btn-primary" id='submit-button'>Signup</button>
             </form>
             <div className="mt-3">
                 <p>Already have an account? <Link href="/login">Log in</Link></p>

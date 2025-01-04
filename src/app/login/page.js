@@ -9,6 +9,7 @@ import Link from 'next/link';
 const LoginPage = () => {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
+    const [errorMessage, setErrorMessage] = useState(null); 
     const { login } = useContext(UserContext);
     const router = useRouter();
 
@@ -19,8 +20,7 @@ const LoginPage = () => {
             login(userData);
             router.push('/');
         } catch (error) {
-            console.error('Login error:', error.message);
-            alert('Login failed. Please check your credentials.');
+            setErrorMessage('Login failed. Please check your credentials.');
         }
     };
 
@@ -48,10 +48,17 @@ const LoginPage = () => {
                         onChange={(e) => setPassword(e.target.value)}
                     />
                 </div>
-                <button type="submit" className="btn btn-primary">Login</button>
+
+                {errorMessage && ( 
+                    <div id="login-error" className="alert alert-danger" role="alert">
+                        {errorMessage}
+                    </div>
+                )}
+
+                <button type="submit" className="btn btn-primary" id="submit-button">Login</button>
                 <div className="mt-3">
-                <p>Don't have an account? <Link href="/signup">Sign Up</Link></p>
-            </div>
+                    <p>Don't have an account? <Link href="/signup">Sign Up</Link></p>
+                </div>
             </form>
         </div>
     );

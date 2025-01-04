@@ -26,12 +26,12 @@ const Navbar = () => {
         </button>
         <div className="collapse navbar-collapse" id="navbarNavAltMarkup">
           <div className="navbar-nav">
-            <a className="nav-link" href="/products">Products</a>
-            <a className="nav-link" href="/cart"><i className="bi bi-cart"></i> Cart</a>
-            {!user && (<a className="nav-link" href="/login">Login</a>)}
-            {user && (<a className="nav-link" href="/orders">Orders</a>)}
-            {user && (<a className="nav-link" href="" onClick={handleLogout}>Logout</a>)}
-            {user && (<a className="nav-link disabled"><i className="bi bi-person-circle"></i> {user.username}</a>)}
+            <a className="nav-link" href="/products" id='nav-products'>Products</a>
+            <a className="nav-link" href="/cart" id='nav-cart'><i className="bi bi-cart"></i> Cart</a>
+            {!user && (<a className="nav-link" href="/login" id='nav-login'>Login</a>)}
+            {user && (<a className="nav-link" href="/orders" id='nav-orders'>Orders</a>)}
+            {user && (<a className="nav-link" href="" onClick={handleLogout} id='nav-logout'>Logout</a>)}
+            {user && (<a className="nav-link disabled" id='nav-user'><i className="bi bi-person-circle"></i> {user.username}</a>)}
           </div>
         </div>
       </div>
