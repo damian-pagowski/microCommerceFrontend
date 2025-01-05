@@ -1,7 +1,7 @@
-const BASE_URL_PRODUCT = 'http://127.0.0.1:3034/products';
-const BASE_URL_REVIEWS = 'http://127.0.0.1:3037/reviews';
-const BASE_URL_ORDER = 'http://127.0.0.1:3032/orders';
-const BASE_URL_PAYMENT = 'http://127.0.0.1:3033/payments';
+const BASE_URL_PRODUCT = process.env.NEXT_PUBLIC_BASE_URL_PRODUCT || 'http://127.0.0.1:3034/products';
+const BASE_URL_REVIEWS = process.env.NEXT_PUBLIC_BASE_URL_REVIEWS || 'http://127.0.0.1:3037/reviews';
+const BASE_URL_ORDER = process.env.NEXT_PUBLIC_BASE_URL_ORDER || 'http://127.0.0.1:3032/orders';
+const BASE_URL_PAYMENT = process.env.NEXT_PUBLIC_BASE_URL_PAYMENT || 'http://127.0.0.1:3033/payments';
 
 // Get authentication headers for API requests
 const getAuthHeaders = () => {

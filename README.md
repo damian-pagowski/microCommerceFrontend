@@ -1,36 +1,121 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
 
-## Getting Started
+# MicroCommerce Frontend
 
-First, run the development server:
+## Overview
+MicroCommerce Frontend is a responsive e-commerce application built using modern web technologies. This project serves as the frontend for the MicroCommerce ecosystem and provides features like product browsing, cart management, user authentication, and order tracking.
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+---
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Stack
+- **Framework**: [Next.js](https://nextjs.org/) (App Router)
+- **Styling**: [Bootstrap](https://getbootstrap.com/)
+- **State Management**: Context API
+- **Testing**: [Cypress](https://www.cypress.io/)
 
-You can start editing the page by modifying `app/page.js`. The page auto-updates as you edit the file.
+---
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## Features
+### Implemented
+- User Authentication
+- Product Listing
+- Product Details
+- Cart Management
+- Checkout
+- Order History
+- Product Reviews
 
-## Learn More
+---
 
-To learn more about Next.js, take a look at the following resources:
+## Tests
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+### Stack
+Tests are implemented using **Cypress** for end-to-end testing. Tests cover a wide range of scenarios to ensure the stability and functionality of the application.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+### Scenarios
 
-## Deploy on Vercel
+#### **Implemented**
+1. **User Authentication**
+    - Login functionality
+    - Signup functionality
+    - Logout functionality
+    - Access restrictions for protected routes
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+2. **Product Listing**
+    - Displaying all available products
+    - Filtering products via search
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+3. **Product Details**
+    - Displaying product information
+    - Adding products to the cart
+    - Handling reviews and ratings
+
+4. **Cart Management**
+    - Adding items to the cart
+    - Updating quantities
+    - Removing items
+
+5. **Checkout**
+    - Proceeding with checkout for logged-in users
+    - Preventing checkout for guests
+
+#### **Remaining**
+1. **Order History**
+    - Displaying past orders
+    - Restricting access for unauthenticated users
+    - Handling empty orders list
+
+2. **Reviews**
+    - Adding a new review
+    - Displaying existing reviews
+
+3. **Navigation**
+    - Testing navigation across all pages (e.g., redirections and menu links)
+
+---
+
+## Running the Project
+
+### Prerequisites
+- **Node.js** (v16 or later)
+- **npm** or **yarn**
+
+### Installation
+1. Clone the repository:
+   ```bash
+   git clone https://github.com/your-repo/microcommerce-frontend.git
+   cd microcommerce-frontend
+   ```
+
+2. Install dependencies:
+   ```bash
+   npm install
+   ```
+
+3. Run the development server:
+   ```bash
+   npm run dev
+   ```
+
+4. Open the application:
+   Navigate to `http://localhost:3000` in your browser.
+
+---
+
+## Testing
+
+### Running Tests
+1. Open Cypress Test Runner:
+   ```bash
+   npx cypress open
+   ```
+
+2. Run all tests directly from the Cypress UI or via CLI:
+   ```bash
+   npx cypress run
+   ```
+
+---
+
+## License
+This project uses a **custom license**. Usage is only permitted with written permission from the author: Damian Pągowski
+
