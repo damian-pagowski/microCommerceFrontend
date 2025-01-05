@@ -1,0 +1,30 @@
+[
+  {
+    "name": "Snake 3D",
+    "image": "/images/products/snake.png",
+    "description": "ante sollicitudin. Cras purus odio, vestibulum\n          in vulputate at, tempus viverra turpis. Fusce condimentum\n          nunc ac nisi vulputate fringilla. Donec lacinia.",
+    "rating": 4,
+    "price": 99.99,
+    "productId": 1,
+    "category": "games",
+    "subcategory": "ps4",
+    "badges": [
+      "Best Seller"
+    ],
+    "quantity": 1
+  },
+  {
+    "name": "Age Of Colonies",
+    "image": "/images/products/strategy2.jpeg",
+    "description": "Lorem ipsum, dolor sit amet consectetur adipisicing elit. Nulla, excepturi veritatis. \n        Doloribus, provident nisi ratione possimus aliquam eligendi! Dolorum eum sed asperiores alias natus repudiandae.\n         Vero, cumque. Lorem ipsum dolor sit amet.",
+    "rating": 5,
+    "price": 5.99,
+    "productId": 7,
+    "category": "games",
+    "subcategory": "ps4",
+    "badges": [
+      "Best Seller"
+    ],
+    "quantity": 1
+  }
+]

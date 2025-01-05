@@ -1,4 +1,4 @@
-import { signupSelectors, productListSelectors, productDetailsSelectors, searchSelectors } from './selectors';
+import { signupSelectors, productListSelectors, productDetailsSelectors, searchSelectors, checkoutSelectors } from './selectors';
 import { loginUser, fetchProductDetails, fetchProductReviews, fetchProductReviewStats } from './api';
 
 Cypress.Commands.add('fillSignupForm', (username, email, password) => {
@@ -66,4 +66,16 @@ Cypress.Commands.add('openToCartProductWithId', (productId) => {
     cy.openProductWithId(productId);
     cy.addProductToCart();
     cy.visit('/cart');
+});
+
+Cypress.Commands.add('setCart', (cart) => {
+    window.localStorage.setItem('cart', JSON.stringify(cart));
+});
+
+Cypress.Commands.add('fillInPaymentDetails', (name, cardNumber, validity, cvv) => {
+    cy.get(checkoutSelectors.cardNameInput).type(name);
+    cy.get(checkoutSelectors.cardNumberInput).type(cardNumber);
+    cy.get(checkoutSelectors.cardExpiryInput).type(validity);
+    cy.get(checkoutSelectors.cardCvvInput).type(cvv);
+    cy.get(checkoutSelectors.submitPaymentButton).click();
 });

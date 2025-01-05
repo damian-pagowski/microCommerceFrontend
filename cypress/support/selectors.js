@@ -38,6 +38,17 @@ export const signupSelectors = {
     emptyCartMessage: '#empty-cart',
     cartTotal: '#total',
     cartCheckoutButton: '#checkout-button',
-
-
   };
+
+
+  export const checkoutSelectors = {
+    paymentForm: '#payment-form',
+    cardNumberInput: '#card-number',
+    cardNameInput: '#card-name',
+    cardExpiryInput: '#expiry-date',
+    cardCvvInput: '#cvv',
+    submitPaymentButton: '#payment-submit',
+    paymentSuccessMessage: '#checkout-success',
+    paymentErrorMessage: '#checkout-error',
+  };
+
