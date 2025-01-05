@@ -26,3 +26,18 @@ export const signupSelectors = {
     searchInput: '#search-input',
     searchButton: '#search-submit',
   };
+
+  export const cartSelectors = {
+    cartItems: '.cart-item',
+    cartItemName: '.cart-item-name',
+    cartItemQuantity: '.cart-item-quantity',
+    cartItemRemoveButton: '.cart-item-remove',
+    cartItemIncreaseQuantity: '.cart-item-increase', 
+    cartItemDecreaseQuantity: '.cart-item-decrease', 
+    cartItemPrice: '.cart-item-price',
+    emptyCartMessage: '#empty-cart',
+    cartTotal: '#total',
+    cartCheckoutButton: '#checkout-button',
+
+
+  };

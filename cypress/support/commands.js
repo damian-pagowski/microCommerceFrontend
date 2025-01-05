@@ -62,3 +62,8 @@ Cypress.Commands.add('openProductWithId', (productId) => {
     cy.visit(`/products/${productId}`);
 });
 
+Cypress.Commands.add('openToCartProductWithId', (productId) => {
+    cy.openProductWithId(productId);
+    cy.addProductToCart();
+    cy.visit('/cart');
+});

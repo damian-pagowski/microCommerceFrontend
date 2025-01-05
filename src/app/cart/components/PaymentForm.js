@@ -21,12 +21,12 @@ const PaymentForm = ({ onSubmit }) => {
   };
 
   return (
-    <form onSubmit={handleSubmit}>
+    <form onSubmit={handleSubmit} id='payment-form'>
       <div className="mb-3">
         <label htmlFor="name" className="form-label">Name on Card</label>
         <input
           type="text"
-          id="name"
+          id="card-name"
           name="name"
           className="form-control"
           value={cardDetails.name}
@@ -38,7 +38,7 @@ const PaymentForm = ({ onSubmit }) => {
         <label htmlFor="cardNumber" className="form-label">Card Number</label>
         <input
           type="text"
-          id="cardNumber"
+          id="card-number"
           name="cardNumber"
           className="form-control"
           value={cardDetails.cardNumber}
@@ -50,7 +50,7 @@ const PaymentForm = ({ onSubmit }) => {
         <label htmlFor="expiryDate" className="form-label">Expiry Date</label>
         <input
           type="text"
-          id="expiryDate"
+          id="expiry-date"
           name="expiryDate"
           className="form-control"
           value={cardDetails.expiryDate}
@@ -70,7 +70,7 @@ const PaymentForm = ({ onSubmit }) => {
           required
         />
       </div>
-      <button type="submit" className="btn btn-success w-100">Submit Payment</button>
+      <button type="submit" className="btn btn-success w-100" id='payment-submit'>Submit Payment</button>
     </form>
   );
 };

@@ -85,7 +85,7 @@ const CartPage = () => {
       <div className="row">
         <div className="col-md-8">
           {cart.length === 0 ? (
-            <p>Your cart is empty.</p>
+            <p id='empty-cart'>Your cart is empty.</p>
           ) : (
             <ul className="list-group">
               {cart.map((item) => (
@@ -97,7 +97,7 @@ const CartPage = () => {
         <div className="col-md-4">
 
           <h3>Summary</h3>
-          <p>
+          <p id='total'>
             Total: <strong>${cart.reduce((total, item) => total + item.price * item.quantity, 0).toFixed(2)}</strong>
           </p>
           {error && <p className="text-danger" id="checkout-error">{error}</p>}
