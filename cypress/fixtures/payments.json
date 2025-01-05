@@ -1,0 +1,14 @@
+{
+    "validCard": {
+        "cardHolder": "John Doe",
+        "cardNumber": "4111111111111111",
+        "expirationDate": "12/26",
+        "cvv": "123"
+    },
+    "brokeUser": {
+        "cardHolder": "Broke User",
+        "cardNumber": "4111111111111111",
+        "expirationDate": "12/26",
+        "cvv": "123"
+    }
+}

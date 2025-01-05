@@ -72,10 +72,10 @@ Cypress.Commands.add('setCart', (cart) => {
     window.localStorage.setItem('cart', JSON.stringify(cart));
 });
 
-Cypress.Commands.add('fillInPaymentDetails', (name, cardNumber, validity, cvv) => {
-    cy.get(checkoutSelectors.cardNameInput).type(name);
-    cy.get(checkoutSelectors.cardNumberInput).type(cardNumber);
-    cy.get(checkoutSelectors.cardExpiryInput).type(validity);
-    cy.get(checkoutSelectors.cardCvvInput).type(cvv);
+Cypress.Commands.add('fillInPaymentDetails', (card) => {
+    cy.get(checkoutSelectors.cardNameInput).type(card.cardHolder);
+    cy.get(checkoutSelectors.cardNumberInput).type(card.cardNumber);
+    cy.get(checkoutSelectors.cardExpiryInput).type(card.expirationDate);
+    cy.get(checkoutSelectors.cardCvvInput).type(card.cvv);
     cy.get(checkoutSelectors.submitPaymentButton).click();
 });

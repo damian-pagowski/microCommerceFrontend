@@ -33,35 +33,40 @@ describe('Checkout Flow', () => {
     });
 
     it('should complete checkout successfully with valid payment details', () => {
-        cy.intercept('POST', API_URLS.orders.base).as('createOrder');
-        cy.intercept('POST', API_URLS.payments.base).as('processPayment');
+        cy.fixture('payments').then((payment) => {
 
-        cy.get(cartSelectors.cartCheckoutButton).click();
-        cy.fillInPaymentDetails('John Doe', '4111111111111111', '12/26', '123');
+            cy.intercept('POST', API_URLS.orders.base).as('createOrder');
+            cy.intercept('POST', API_URLS.payments.base).as('processPayment');
 
-        // Wait for all API calls
-        cy.wait('@createOrder').its('response.statusCode').should('eq', 201);
-        cy.wait('@processPayment').its('response.statusCode').should('eq', 200);
-        // Verify success message
-        cy.get(checkoutSelectors.paymentSuccessMessage)
-            .should('contain', 'Payment successful')
+            cy.get(cartSelectors.cartCheckoutButton).click();
+            cy.fillInPaymentDetails(payment.validCard);
+
+            // Wait for all API calls
+            cy.wait('@createOrder').its('response.statusCode').should('eq', 201);
+            cy.wait('@processPayment').its('response.statusCode').should('eq', 200);
+            // Verify success message
+            cy.get(checkoutSelectors.paymentSuccessMessage)
+                .should('contain', 'Payment successful')
+        });
     });
 
     it('should handle failed payment gracefully', () => {
-        cy.intercept('POST', API_URLS.orders.base).as('createOrder');
-        cy.intercept('POST', API_URLS.payments.base).as('processPayment');
+        cy.fixture('payments').then((payment) => {
 
-        cy.get(cartSelectors.cartCheckoutButton).click();
-        cy.fillInPaymentDetails('broke user', '4111111111111111', '12/26', '123');
+            cy.intercept('POST', API_URLS.orders.base).as('createOrder');
+            cy.intercept('POST', API_URLS.payments.base).as('processPayment');
 
-        // Wait for API calls
-        cy.wait('@createOrder').its('response.statusCode').should('eq', 201);
-        cy.wait('@processPayment').its('response.statusCode').should('eq', 402);
+            cy.get(cartSelectors.cartCheckoutButton).click();
+            cy.fillInPaymentDetails(payment.brokeUser);
 
-        // Verify error message
-        cy.get(checkoutSelectors.paymentErrorMessage).should('contain', 'An error occurred during payment');
+            // Wait for API calls
+            cy.wait('@createOrder').its('response.statusCode').should('eq', 201);
+            cy.wait('@processPayment').its('response.statusCode').should('eq', 402);
+
+            // Verify error message
+            cy.get(checkoutSelectors.paymentErrorMessage).should('contain', 'An error occurred during payment');
+        });
     });
-
     it('should prevent checkout if cart is empty', () => {
         cy.clearLocalStorage('cart');
         cy.visit('/cart');
